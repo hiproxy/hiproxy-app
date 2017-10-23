@@ -18,13 +18,25 @@
   ],
   "author": "zdying",
   "license": "MIT",
+  "dependencies": {
+    "hiproxy": "^1.2.6"
+  },
   "devDependencies": {
     "electron": "~1.7.8",
-    "electron-builder": "^19.37.2",
-    "hiproxy": "^1.2.6"
+    "electron-builder": "^19.37.2"
   },
   "build": {
     "appId": "org.hiproxy.app",
+    "protocols": {
+      "name": "hiproxy-deep-linking",
+      "schemes": ["hiproxy"]
+    },
+    "files": [
+      "app/**/*",
+      "main.js",
+      "node_modules/**/*",
+      "package.json"
+    ],
     "mac": {
       "category": "org.hiproxy.app"
     }

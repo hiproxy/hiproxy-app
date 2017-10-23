@@ -25,8 +25,6 @@ const {ipcMain} = electron;
 
 global.hiproxy = hiproxy;
 
-app.dock.setIcon(path.join(__dirname, 'logo_96x96.png'));
-
 ipcMain.on('close-main-window', function () {
   app.quit();
 });
@@ -88,11 +86,8 @@ function createWindow () {
   mainWindow = new BrowserWindow({
     width: 600,
     height: 380,
-    center: true,
-    icon: path.join(__dirname, 'logo_96x96.png')
+    center: true
   });
-
-  console.log(path.join(__dirname, 'logo_96x96.png'));
 
   // and load the index.html of the app.
   mainWindow.loadURL(url.format({
