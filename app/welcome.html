@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>hiproxy</title>
+    <link rel="stylesheet" href="welcome.css">
+  </head>
+  <body>
+    <div class="left">
+      <h2>工作空间</h2>
+      <ul class="list" id="js-workspace">
+        <li class="item">
+          <a href="javascript:;" data-dir="user-home">用户目录</a>          
+        </li>
+        <li class="item">
+          <a href="javascript:;" data-dir="custom">选择目录...</a>
+          <input type="file" webkitdirectory id="js-workspace-input" style="display:none" />
+        </li>
+      </ul>
+      <h2>最近使用</h2>
+      <div>
+        <ul class="list" id="js-workspace-history">
+          <li class="item">
+            <a href="javascript:;" data-dir="user-home">更多...</a>          
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="right">
+      <h2>使用帮助</h2>
+      <ul class="list" id="js-workspace-history">
+        <li class="item">
+          <a class="outer-link" href="http://hiproxy.org/" target="_blank">使用文档</a>          
+        </li>
+      </ul>
+
+      <h2>项目</h2>
+      <ul class="list" id="js-workspace-history">
+        <li class="item">
+          <a class="outer-link" href="https://github.com/hiproxy" target="_blank">项目主页</a>          
+        </li>
+        <li class="item">
+          <a class="outer-link" href="https://github.com/hiproxy/hiproxy/wiki" target="_blank">相关Wiki</a>          
+        </li>
+      </ul>
+
+      <h2>安装CLI</h2>
+      <pre class="bash">npm install -g hiproxy</pre>
+    </div>
+    <script>
+      // You can also require other files to run in this process
+      var welcome = require('./welcome.js');
+      welcome.initialize();
+    </script>
+  </body>
+</html>

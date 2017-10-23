@@ -1,0 +1,32 @@
+{
+  "name": "hiproxy-app",
+  "private": true,
+  "version": "1.0.0",
+  "description": "hiporxy desktop application",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "pack": "./node_modules/.bin/electron-builder --dir",
+    "dist": "./node_modules/.bin/electron-builder",
+    "postinstall": "electron-builder install-app-deps"
+  },
+  "repository": "https://github.com/hiproxy/hiproxy-app",
+  "keywords": [
+    "hiproxy",
+    "app",
+    "desktop"
+  ],
+  "author": "zdying",
+  "license": "MIT",
+  "devDependencies": {
+    "electron": "~1.7.8",
+    "electron-builder": "^19.37.2",
+    "hiproxy": "^1.2.6"
+  },
+  "build": {
+    "appId": "org.hiproxy.app",
+    "mac": {
+      "category": "org.hiproxy.app"
+    }
+  }
+}
