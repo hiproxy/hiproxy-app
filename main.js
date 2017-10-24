@@ -102,7 +102,7 @@ const App = {
         })
         .then(function () {
           mainWindow.loadURL('http://127.0.0.1:6636/?from=start-up');
-          mainWindow.setSize(1280, 867);
+          mainWindow.setSize(1250, 750);
           mainWindow.center();
         });
     });
@@ -133,7 +133,7 @@ const App = {
               .then(function () {
                 log.info('hiproxy proxy server start success.');
                 this.createWindow();
-                mainWindow.setSize(1280, 867);
+                mainWindow.setSize(1250, 750);
                 mainWindow.loadURL('http://127.0.0.1:6636/?from=open-plugin');
 
                 pluginWindow = new BrowserWindow({width: 840, height: 515});
@@ -162,7 +162,9 @@ const App = {
     mainWindow = new BrowserWindow({
       width: 600,
       height: 380,
-      center: true
+      center: true,
+      resizable: false,
+      maximizable: false
     });
 
     // and load the index.html of the app.
@@ -245,14 +247,5 @@ process.on('uncaughtException', function (error) {
   log.info('[uncaughtException]', error);
 });
 
-
-const {crashReporter} = require('electron')
-
-crashReporter.start({
-  productName: 'YourName',
-  companyName: 'YourCompany',
-  submitURL: 'https://your-domain.com/url-to-submit',
-  uploadToServer: true
-})
 // In this file you can include the rest of your app's specific main process
 // code. You can also put them in separate files and require them here.
