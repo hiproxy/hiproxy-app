@@ -17,6 +17,10 @@ module.exports = {
     //   ipcRenderer.send('start-hiproxy', process.cwd());
     // });
 
+    ipcRenderer.on('log', function (eve) {
+      console.log.apply(console, [].slice.call(arguments, 1));
+    });
+
     var $workspaceInput = $('#js-workspace-input');
 
     $('#js-workspace').on('click', 'a', function (eve) {
