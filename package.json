@@ -23,7 +23,7 @@
   "dependencies": {
     "electron-log": "^2.2.9",
     "electron-updater": "^2.15.0",
-    "hiproxy": "^1.2.7",
+    "hiproxy": "^1.2.8",
     "hiproxy-plugin-dashboard": "^1.1.5",
     "hiproxy-plugin-noah": "^1.0.2"
   },
