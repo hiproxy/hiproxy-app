@@ -1,5 +1,6 @@
 {
   "name": "hiproxy-app",
+  "productName": "hiproxy desktop",
   "private": true,
   "version": "1.0.0",
   "description": "hiporxy desktop application",
@@ -7,7 +8,8 @@
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "pack": "./node_modules/.bin/electron-builder --dir",
-    "dist": "./node_modules/.bin/electron-builder",
+    "release": "export GH_TOKEN=4344e587dbde45fe049d0ac75140326405e9554d && ./node_modules/.bin/electron-builder --mac --win --publish always",
+    "dist": "./node_modules/.bin/electron-builder --win --mac",
     "postinstall": "electron-builder install-app-deps"
   },
   "repository": "https://github.com/hiproxy/hiproxy-app",
@@ -20,6 +22,7 @@
   "license": "MIT",
   "dependencies": {
     "electron-log": "^2.2.9",
+    "electron-updater": "^2.15.0",
     "hiproxy": "^1.2.7",
     "hiproxy-plugin-dashboard": "^1.1.5",
     "hiproxy-plugin-noah": "^1.0.2"

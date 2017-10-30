@@ -18,6 +18,8 @@ const Server = hiproxy.Server;
 
 const pluginRoot = path.join(app.getAppPath(), 'node_modules');
 
+const {autoUpdater} = require('electron-updater');
+
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
 let mainWindow;
@@ -31,6 +33,10 @@ const {ipcMain} = electron;
 global.hiproxy = hiproxy;
 
 log.transports.file.level = 'info';
+
+autoUpdater.logger = log;
+
+log.info('v1.0.2 is coming...');
 
 const App = {
   initialize: function () {
@@ -110,6 +116,36 @@ const App = {
 
   onready: function () {
     log.info('on ready event.', deeplinkingUrl);
+
+    autoUpdater.on('checking-for-update', () => {
+      log.info('checking-for-update');
+    });
+    autoUpdater.on('update-available', (info) => {
+      log.info('update-available', info);
+    });
+    autoUpdater.on('update-not-available', (info) => {
+      log.info('update-not-available');
+    });
+    autoUpdater.on('error', (err) => {
+      log.info('error', err);
+    });
+    autoUpdater.on('download-progress', (progressObj) => {
+      log.info('download-progress', progressObj);
+    });
+
+    autoUpdater.on('update-downloaded', (info) => {
+      // Wait 5 seconds, then quit and install
+      // In your application, you don't need to wait 5 seconds.
+      // You could call autoUpdater.quitAndInstall(); immediately
+      console.log('downloaded..');
+      setTimeout(function () {
+        //autoUpdater.quitAndInstall();
+      }, 5000);
+    });
+
+    autoUpdater.checkForUpdatesAndNotify();
+
+    console.log('checkForUpdatesAndNotify, called');
 
     if (!deeplinkingUrl) {
       this.createWindow();
