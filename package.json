@@ -2,13 +2,13 @@
   "name": "hiproxy-app",
   "productName": "hiproxy desktop",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.0-beta",
   "description": "hiporxy desktop application",
   "main": "main.js",
   "scripts": {
     "start": "./node_modules/.bin/electron .",
     "pack": "./node_modules/.bin/electron-builder --dir",
-    "release": "export GH_TOKEN=4344e587dbde45fe049d0ac75140326405e9554d && ./node_modules/.bin/electron-builder --mac --win --publish always",
+    "release": "./node_modules/.bin/electron-builder --mac --win --publish always",
     "dist": "./node_modules/.bin/electron-builder --win --mac",
     "postinstall": "electron-builder install-app-deps"
   },
@@ -25,7 +25,7 @@
     "electron-updater": "^2.15.0",
     "hiproxy": "^1.2.8",
     "hiproxy-plugin-dashboard": "^1.1.5",
-    "hiproxy-plugin-noah": "^1.0.2"
+    "hiproxy-plugin-noah": "^1.1.0"
   },
   "devDependencies": {
     "electron": "~1.7.8",

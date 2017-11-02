@@ -26,6 +26,7 @@ let mainWindow;
 let pluginWindow;
 // Deep linked url
 let deeplinkingUrl;
+// let deeplinkingUrl = 'hiproxy://plugin/noah/26527';
 let hiproxyServer;
 
 const {ipcMain} = electron;
@@ -83,7 +84,12 @@ const App = {
       deeplinkingUrl = _url;
 
       log.info('log', 'app.event#open-url', _url);
-    });
+      log.info('app is ready:', app.isReady());
+
+      if (app.isReady()) {
+        this.handleDeepLinkURL(_url);
+      }
+    }.bind(this));
   },
 
   initIPCEvent: function () {
@@ -134,18 +140,11 @@ const App = {
     });
 
     autoUpdater.on('update-downloaded', (info) => {
-      // Wait 5 seconds, then quit and install
-      // In your application, you don't need to wait 5 seconds.
       // You could call autoUpdater.quitAndInstall(); immediately
       console.log('downloaded..');
-      setTimeout(function () {
-        //autoUpdater.quitAndInstall();
-      }, 5000);
     });
 
     autoUpdater.checkForUpdatesAndNotify();
-
-    console.log('checkForUpdatesAndNotify, called');
 
     if (!deeplinkingUrl) {
       this.createWindow();
@@ -153,43 +152,50 @@ const App = {
     }
 
     if (deeplinkingUrl) {
-      var obj = url.parse(deeplinkingUrl);
-      var hostname = obj.hostname;
+      this.handleDeepLinkURL(deeplinkingUrl);
+    }
+  },
 
-      switch (hostname) {
-        case 'plugin':
-          log.info('load plugin from deep linking url.');
-          log.info('is hiproxy server null :', !hiproxyServer);
-          if (!hiproxyServer) {
-            this.loadHiproxyPlugins()
-              .then(function () {
-                log.info('hiproxy plugins load success.');
-                this.startHiproxyServer();
-              }.bind(this))
-              .then(function () {
-                log.info('hiproxy proxy server start success.');
-                this.createWindow();
-                mainWindow.setSize(1250, 750);
-                mainWindow.loadURL('http://127.0.0.1:6636/?from=open-plugin');
+  handleDeepLinkURL: function (deeplinkingUrl) {
+    var obj = url.parse(deeplinkingUrl);
+    var hostname = obj.hostname;
 
-                pluginWindow = new BrowserWindow({width: 840, height: 515});
-                pluginWindow.on('closed', () => {
-                  pluginWindow = null;
-                });
+    switch (hostname) {
+      case 'plugin':
+        log.info('load plugin from deep linking url.');
+        log.info('plugin url:' + 'http://127.0.0.1:6636' + obj.path);
+        log.info('is hiproxy server null :', !hiproxyServer);
+        if (!hiproxyServer) {
+          this.loadHiproxyPlugins()
+            .then(function () {
+              log.info('hiproxy plugins load success.');
+              this.startHiproxyServer();
+            }.bind(this))
+            .then(function () {
+              log.info('hiproxy proxy server start success.');
+              this.createWindow();
+              mainWindow.setSize(1250, 750);
+              mainWindow.loadURL('http://127.0.0.1:6636/?from=open-plugin');
 
-                // Load a remote URL
-                pluginWindow.loadURL('http://127.0.0.1:6636' + obj.path);
-              }.bind(this))
-              .catch(function (err) {
-                log.error('[error]', err);
-                log.info('[error]', err);
+              pluginWindow = new BrowserWindow({width: 840, height: 515});
+              pluginWindow.on('closed', () => {
+                pluginWindow = null;
               });
-          }
-          break;
-        default:
-          log.info('unknow hostname: ' + hostname);
-          break;
-      }
+
+              // Load a remote URL
+              pluginWindow.loadURL('http://127.0.0.1:6636' + obj.path);
+            }.bind(this))
+            .catch(function (err) {
+              log.error('[error]', err);
+              log.info('[error]', err);
+            });
+        } else if (pluginWindow) {
+          pluginWindow.loadURL('http://127.0.0.1:6636' + obj.path);
+        }
+        break;
+      default:
+        log.info('unknow hostname: ' + hostname);
+        break;
     }
   },
 
